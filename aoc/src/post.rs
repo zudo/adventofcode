@@ -25,11 +25,12 @@ pub struct Args {
 }
 pub async fn run(args: Args) -> Result<(), Box<dyn Error>> {
     dotenv::dotenv().ok();
-    let attempts = File::open("attempts.txt").unwrap();
-    for line in BufReader::new(attempts).lines() {
-        if line? == args.answer {
-            println!("{} has been submitted before", args.answer.magenta());
-            return Ok(());
+    if let Ok(file) = File::open("attempts.txt") {
+        for line in BufReader::new(file).lines() {
+            if line? == args.answer {
+                println!("{} has been submitted before", args.answer.magenta());
+                return Ok(());
+            }
         }
     }
     let date = Utc::now().with_timezone(&*TZ);
