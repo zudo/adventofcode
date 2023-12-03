@@ -4,10 +4,11 @@
 [Personal Times]
 
 ```s
-      -------Part 1--------   -------Part 2--------
-Day       Time  Rank  Score       Time  Rank  Score
-  2   00:36:52  8267      0   00:51:55  8966      0
-  1   00:10:55  5343      0   01:13:06  7986      0
+      -------Part 1--------   --------Part 2--------
+Day       Time  Rank  Score       Time   Rank  Score
+  3   00:59:40  6842      0   03:02:14  12071      0
+  2   00:36:52  8267      0   00:51:55   8966      0
+  1   00:10:55  5343      0   01:13:06   7986      0
 ```
 
 Create a `.env` file and add your session cookie from the browser.
