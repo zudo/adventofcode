@@ -13,7 +13,7 @@ fn main() {
         .last()
         .unwrap()
         .split(" ")
-        .map(|s| s.parse::<u64>().unwrap())
+        .map(|s| s.parse::<i64>().unwrap())
         .collect::<Vec<_>>();
     // info!(?seeds);
     for group in groups {
@@ -26,7 +26,7 @@ fn main() {
             // info!(?line);
             let a = line
                 .split(" ")
-                .map(|s| s.parse::<u64>().unwrap())
+                .map(|s| s.parse::<i64>().unwrap())
                 .collect::<Vec<_>>();
             let destination_range_start = a[0];
             let source_range_start = a[1];
@@ -44,16 +44,22 @@ fn main() {
     let mut locations = vec![];
     // for seed in seeds.iter().cloned().take(1) {
     for seed in seeds {
-        let map_next = |i: u64, k: &str| {
+        let map_next = |i: i64, k: &str| {
             let mut next = i;
             for vec in map.get(k).unwrap() {
-                info!(?vec);
-                for (j, v) in vec.clone().0.enumerate() {
-                    if v == i {
-                        next = vec.1.clone().nth(j).unwrap();
-                        // info!(?vec);
-                    }
+                // info!(?vec);
+                if vec.0.contains(&i) {
+                    next = (i + vec.1.start - vec.0.start).abs();
+                    break;
+                    // next = vec.1.clone().nth(i as usize).unwrap();
+                    // info!(?vec);
                 }
+                // for (j, v) in vec.clone().0.enumerate() {
+                //     if v == i {
+                //         next = vec.1.clone().nth(j).unwrap();
+                //         // info!(?vec);
+                //     }
+                // }
             }
             next
         };
@@ -80,5 +86,7 @@ fn main() {
         locations.push((seed, location));
         info!(?seed);
     }
-    info!("asdf");
+    info!(?locations);
+    let min = locations.iter().map(|(_, l)| l).min().unwrap();
+    info!(?min);
 }
