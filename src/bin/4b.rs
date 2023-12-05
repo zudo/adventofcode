@@ -1,6 +1,6 @@
 use adventofcode::*;
 fn main() {
-    let lines = read("input.txt");
+    let lines = read_lines("input.txt");
     let mut cc = vec![1; lines.len()];
     for (row, line) in lines.iter().enumerate() {
         let a = line.split(":").collect::<Vec<_>>();

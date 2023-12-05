@@ -1,6 +1,6 @@
 use adventofcode::*;
 fn main() {
-    let input = read("input.txt");
+    let input = read_lines("input.txt");
     let mut sum = 0;
     for (i, line) in input.iter().enumerate() {
         let mut n = 0;

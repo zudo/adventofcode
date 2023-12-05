@@ -1,6 +1,6 @@
 use adventofcode::*;
 fn main() {
-    let input = read("input.txt");
+    let input = read_lines("input.txt");
     let result: i64 = input
         .iter()
         .map(|line| {

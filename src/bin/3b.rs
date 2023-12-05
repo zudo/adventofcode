@@ -2,7 +2,7 @@ use adventofcode::*;
 use regex::Regex;
 use std::collections::HashMap;
 fn main() {
-    let lines = read("input.txt");
+    let lines = read_lines("input.txt");
     let mut map: HashMap<(usize, usize), Vec<String>> = HashMap::new();
     let re = Regex::new(r"\d+").unwrap();
     for (row, line) in lines.iter().enumerate() {

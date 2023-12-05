@@ -14,7 +14,7 @@ fn to_digit(s: &str) -> Option<&str> {
     }
 }
 fn main() {
-    let input = read("input.txt");
+    let input = read_lines("input.txt");
     let digits = [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "one", "two", "three", "four", "five", "six",
         "seven", "eight", "nine",
