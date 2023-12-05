@@ -1,4 +1,7 @@
 use adventofcode::*;
+use rayon::iter::IntoParallelIterator;
+use rayon::iter::IntoParallelRefIterator;
+use rayon::iter::ParallelIterator;
 use std::collections::HashMap;
 fn main() {
     tracing();
@@ -41,13 +44,26 @@ fn main() {
     // for (k, v) in map.iter() {
     //     info!(?k, ?v);
     // }
-    let mut locations = vec![];
     // for seed in seeds.iter().cloned().take(1) {
-    let vec_seeds = seeds.chunks(2).map(|s| (s[0], s[1])).collect::<Vec<_>>();
-    info!(?vec_seeds);
-    for seeds in vec_seeds {
+    let mut vec_seeds = seeds
+        .chunks(2)
+        .map(|s| (s[0]..s[0] + s[1]))
+        .collect::<Vec<_>>();
+    // vec_seeds.sort_by(|a, b| a.start.cmp(&b.start));
+    // info!(?vec_seeds);
+    // for i in 0..vec_seeds.len() - 1 {
+    //     let a = vec_seeds[i].clone();
+    //     let b = vec_seeds[i + 1].clone();
+    //     if a.end > b.start {
+    //         vec_seeds[i] = a.start..b.start;
+    //         vec_seeds[i + 1] = b.start..b.end;
+    //     }
+    // }
+    // info!(?vec_seeds);
+    let vec_locations = vec_seeds.par_iter().map(|seeds| {
+        let mut locations = vec![];
         info!(?seeds);
-        for seed in seeds.0..seeds.0 + seeds.1 {
+        for seed in seeds.clone() {
             let map_next = |i: i64, k: &str| {
                 let mut next = i;
                 for vec in map.get(k).unwrap() {
@@ -89,8 +105,14 @@ fn main() {
             // let location = map_next(seed, "humidity-to-location");
             locations.push((seed, location));
         }
-    }
-    info!(?locations);
-    let min = locations.iter().map(|(_, l)| l).min().unwrap();
+        locations
+    });
+    info!(?vec_locations);
+    let min = vec_locations
+        .into_par_iter()
+        .flatten()
+        .map(|(_, l)| l)
+        .min()
+        .unwrap();
     info!(?min);
 }
