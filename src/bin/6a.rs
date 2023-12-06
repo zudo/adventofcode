@@ -8,10 +8,7 @@ fn main() {
     let i: usize = int("123");
     let s = str("asdf");
     let ii = vec.ii();
-    let ct: (&str, &str) = ii.ct().unwrap();
-    let ct2: (&str, &str) = ii.ct().unwrap();
     let map = vec.cmap(|x| x.cs());
-    let ints: Vec<u32> = vec.cmap(|x| x.ci());
-    let a = max(ints);
+    let m: usize = max([]);
     info!(?set_a);
 }

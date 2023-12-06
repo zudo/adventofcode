@@ -29,12 +29,14 @@ pub fn tracing() {
         )
         .init();
 }
+#[track_caller]
 pub fn read_lines(path: impl AsRef<Path>) -> Vec<String> {
     let path = path.as_ref();
     let file = File::open(path).unwrap();
     let buf = BufReader::new(file);
     buf.lines().map(|l| l.unwrap()).collect()
 }
+#[track_caller]
 pub fn read(path: impl AsRef<Path>) -> String {
     let path = path.as_ref();
     let mut file = File::open(path).unwrap();
@@ -86,6 +88,7 @@ pub trait ExtraIterator: Iterator {
     {
         self.clone().collect_vec()
     }
+    #[track_caller]
     fn ca<const N: usize>(&self) -> [Self::Item; N]
     where
         <Self as std::iter::IntoIterator>::Item: std::fmt::Debug,
@@ -107,6 +110,7 @@ pub trait ExtraString: ToString {
     fn cs(&self) -> String {
         self.to_string()
     }
+    #[track_caller]
     fn ci<T: std::str::FromStr>(&self) -> T
     where
         <T as std::str::FromStr>::Err: std::fmt::Debug,
@@ -115,6 +119,7 @@ pub trait ExtraString: ToString {
     }
 }
 impl<T: ToString> ExtraString for T {}
+#[track_caller]
 pub fn int<T: std::str::FromStr>(s: &str) -> T
 where
     T::Err: std::fmt::Debug,
@@ -138,9 +143,11 @@ pub fn slice<T>(a: &[T], start: Option<usize>, stop: Option<usize>, step: usize)
 pub fn len<T>(a: &[T]) -> usize {
     a.len()
 }
+#[track_caller]
 pub fn max<T: Ord>(a: impl IntoIterator<Item = T>) -> T {
     a.into_iter().max().unwrap()
 }
+#[track_caller]
 pub fn min<T: Ord>(a: impl IntoIterator<Item = T>) -> T {
     a.into_iter().min().unwrap()
 }
