@@ -115,3 +115,35 @@ pub trait ExtraString: ToString {
     }
 }
 impl<T: ToString> ExtraString for T {}
+pub fn int<T: std::str::FromStr>(s: &str) -> T
+where
+    T::Err: std::fmt::Debug,
+{
+    s.parse::<T>().unwrap()
+}
+pub fn str(s: impl ToString) -> String {
+    s.to_string()
+}
+pub fn slice<T>(a: &[T], start: Option<usize>, stop: Option<usize>, step: usize) -> Vec<&T> {
+    let start = match start {
+        Some(start) => start,
+        None => 0,
+    };
+    let stop = match stop {
+        Some(stop) => stop,
+        None => a.len(),
+    };
+    a[start..stop].iter().step_by(step).collect()
+}
+pub fn len<T>(a: &[T]) -> usize {
+    a.len()
+}
+pub fn max<T: Ord>(a: impl IntoIterator<Item = T>) -> T {
+    a.into_iter().max().unwrap()
+}
+pub fn min<T: Ord>(a: impl IntoIterator<Item = T>) -> T {
+    a.into_iter().min().unwrap()
+}
+pub fn set<T: std::hash::Hash + Eq>(a: impl IntoIterator<Item = T>) -> HashSet<T> {
+    a.into_iter().collect()
+}
