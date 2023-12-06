@@ -56,7 +56,14 @@ pub trait ExtraIntoIterator: IntoIterator + Sized {
     {
         self.ii().collect()
     }
-    fn cstring(&self) -> String
+    fn cmap<T, F>(&self, f: F) -> Vec<T>
+    where
+        F: FnMut(Self::Item) -> T,
+        Self: Clone,
+    {
+        self.ii().map(f).collect()
+    }
+    fn sums(&self) -> String
     where
         Self::Item: ToString,
         Self: Clone,
