@@ -42,7 +42,7 @@ pub fn read(path: impl AsRef<Path>) -> String {
     file.read_to_string(&mut buf).unwrap();
     buf
 }
-pub trait ExtraIntoIterator: IntoIterator + Sized {
+pub trait ExtraIntoIterator: IntoIterator {
     fn ii(&self) -> Self::IntoIter
     where
         Self: Clone,
@@ -78,8 +78,8 @@ pub trait ExtraIntoIterator: IntoIterator + Sized {
         self.ii().fold(Default::default(), |a, b| a + b)
     }
 }
-impl<T: IntoIterator + Sized + Clone> ExtraIntoIterator for T {}
-pub trait ExtraIterator: Iterator + Sized {
+impl<T: IntoIterator> ExtraIntoIterator for T {}
+pub trait ExtraIterator: Iterator {
     fn cv(&self) -> Vec<Self::Item>
     where
         Self: Clone,
@@ -102,4 +102,16 @@ pub trait ExtraIterator: Iterator + Sized {
         self.clone().collect_tuple()
     }
 }
-impl<T: Iterator + Sized + Clone> ExtraIterator for T {}
+impl<T: Iterator> ExtraIterator for T {}
+pub trait ExtraString: ToString {
+    fn cs(&self) -> String {
+        self.to_string()
+    }
+    fn ci<T: std::str::FromStr>(&self) -> T
+    where
+        <T as std::str::FromStr>::Err: std::fmt::Debug,
+    {
+        self.to_string().parse::<T>().unwrap()
+    }
+}
+impl<T: ToString> ExtraString for T {}
