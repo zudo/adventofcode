@@ -32,5 +32,5 @@ aoc post 1 answer
 ```
 
 ```sh
-cargo watch -x "run --bin 1a"
+sh watch.sh 6b
 ```

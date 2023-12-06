@@ -1,0 +1,1 @@
+RUST_BACKTRACE=1 cargo watch --delay 0 --clear -x "run --bin $@"
