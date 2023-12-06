@@ -1,0 +1,3 @@
+[submodule "unsafed"]
+	path = unsafed
+	url = https://github.com/zudo/unsafed
