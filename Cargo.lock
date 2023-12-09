@@ -1756,6 +1756,8 @@ name = "unsafed"
 version = "0.1.0"
 dependencies = [
  "itertools",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
